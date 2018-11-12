@@ -1,7 +1,3 @@
-**ARCHIVED**
-
-This repository is archived, please see the new repository [here](https://github.com/MetroPlatform/Metro-BrowserExtension)
-
 ## Introduction ##
 
 This is the Chrome extension used to power Metro. The main work is done in
@@ -29,3 +25,7 @@ PRs and Issues are welcome.
 
 Open the extension and select the checkbox to allow Metro to start gathering
 data. This can be disabled/re-enabled at any time.
+
+## Fork ##
+
+This project is a fork of the original Metro Browser Extension repository, found [here](https://github.com/MetroPlatform/Metro-BrowserExtensionArchived)
