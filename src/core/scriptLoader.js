@@ -26,6 +26,8 @@ const createMetroClient = function(datasource, slug, username, projects, schema)
         }
         console.log('Pushing datapoint for ' + datasource);
         chrome.runtime.sendMessage(datapointDetails, {});
+      } else {
+        console.log("Invalid schema, not pushing datapoint.")
       }
     },
 

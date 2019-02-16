@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Metro",
   "description": "This extension allows a user to produce data using https://getmetro.co",
-  "version": "0.0.1",
+  "version": "0.0.2",
 
   "browser_action": {
     "default_icon": "assets/metroLogo.png",
@@ -23,6 +23,10 @@
     "http://*/",
     "https://*/"
   ],
+
+  "externally_connectable": {
+      "matches": ["*://localhost/*", "*://127.0.0.1/*", "https://*.getmetro.co/*"]
+  },
 
   "background": {
     "scripts": ["src/vendor/jquery/jquery.js", "src/core/background.js"]
