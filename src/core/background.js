@@ -1,3 +1,4 @@
+const id = chrome.runtime.id;
 const BUTTON_STATE = "Metro-Core-ContextMenuButtons";
 
 chrome.runtime.onMessage.addListener(
@@ -230,4 +231,15 @@ const clearContextMenuStorage = function() {
 
 chrome.runtime.onInstalled.addListener(function() {
   clearContextMenu();
+});
+
+chrome.runtime.onMessageExternal.addListener( function(msg, sender, sendResponse) {
+  // Allows the Metro website to check if the extension is installed
+  console.log("Received external message from:");
+  console.log(sender)
+  if ((msg.action == "id") && (msg.value == id)) {
+      sendResponse({id : id});
+  }
+  
+  return true;
 });
