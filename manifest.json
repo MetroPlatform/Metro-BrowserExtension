@@ -4,12 +4,6 @@
   "description": "This extension allows a user to produce data using https://getmetro.co",
   "version": "0.0.2",
 
-  "applications": {
-    "gecko": {
-      "id": "{7d14c631-5a09-4f3b-8997-02a966d16f44}"
-    }
-  },
-
   "browser_action": {
     "default_icon": "assets/metroLogo.png",
     "default_popup": "src/options/options.html"
@@ -27,19 +21,15 @@
     "storage",
     "tabs",
     "http://*/",
-    "https://*/",
-    "<all_urls>"
+    "https://*/"
   ],
 
   "externally_connectable": {
-    "matches": ["*://localhost/*", "*://127.0.0.1/*", "https://*.getmetro.co/*"]
+      "matches": ["*://localhost/*", "*://127.0.0.1/*", "https://*.getmetro.co/*"]
   },
 
   "background": {
-    "scripts": [
-      "src/core/background.js",
-      "src/vendor/jquery/jquery.js"
-    ]
+    "scripts": ["src/vendor/jquery/jquery.js", "src/core/background.js"]
   },
 
   "content_scripts": [
