@@ -33,12 +33,16 @@ cp firefox_manifest.json firefox_tmp/manifest.json
 
 # Sign the Firefox extension:
 cd firefox_tmp
-web-ext sign --api-key=$AMO_JWT_ISSUER --api-secret=$AMO_JWT_SECRET
-cp web-ext-artifacts/* ../release/
-cd ../
+zip -qr ../release/metro_firefox_extension.zip *
 
-rm -fr firefox_tmp
+rm -fr chrome_tmp
 
-# Finalize the Firefox extension filename:
-rm -fr release/metro_firefox_extension.xpi
-mv release/$(ls release | grep xpi) release/metro_firefox_extension.xpi
+# web-ext sign --api-key=$AMO_JWT_ISSUER --api-secret=$AMO_JWT_SECRET
+# cp web-ext-artifacts/* ../release/
+# cd ../
+
+# rm -fr firefox_tmp
+
+# # Finalize the Firefox extension filename:
+# rm -fr release/metro_firefox_extension.xpi
+# mv release/$(ls release | grep xpi) release/metro_firefox_extension.xpi
