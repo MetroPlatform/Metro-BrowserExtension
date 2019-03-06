@@ -10,6 +10,11 @@ h1 {
   color: #efc04e;
 }
 
+.custom-control-input:checked~.custom-control-label::before {
+  border-color: #efc04e;
+  background-color: #efc04e;
+}
+
 a {
   color: #efc04e;
   text-decoration: none;

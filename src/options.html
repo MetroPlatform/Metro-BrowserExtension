@@ -2,12 +2,6 @@
 <html>
   <head>
     <title>Metro Settings</title>
-
-    <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="options.css">
-
-    <script src="../vendor/jquery/jquery.js"></script>
-    <script src="options.js"></script>
   </head>
 
   <body>
@@ -43,9 +37,11 @@
 
       <hr class="mt-2">
       <div class="row">
+        <div id="alert" class="col text-danger text-center">
+        </div>
+      </div>
+      <div class="row">
         <div class="col-md">
-          <p>
-            You can add and remove DataSources <a href="https://getmetro.co/datasources">here</a>.
           <div id="settingsContainer">
             <div class="custom-control custom-checkbox my-1 mr-sm-2">
               <input type="checkbox" class="custom-control-input" id="shouldMonitorCheckbox">
@@ -55,7 +51,6 @@
               <input type="checkbox" class="custom-control-input" id="showCounterCheckbox">
               <label class="custom-control-label" for="showCounterCheckbox">Show DataSource Counter</label>
             </div>
-
             <div class="custom-control custom-checkbox my-1 mr-sm-2">
               <input type="checkbox" class="custom-control-input" id="devModeCheckbox">
               <label class="custom-control-label" for="devModeCheckbox">Developer Mode</label>
@@ -70,10 +65,9 @@
           <hr>
           <h1 class="text-center">Dev Mode</h1>
           <p>
-            Set a github URL here to load your own datasources as
-            specified in the docs.
+            Local DataSource URL
           </p>
-          <input type="text" id="devModeGithubInput" class="form-control" placeholder="GitHub URL">
+          <input type="text" id="devModeGithubInput" class="form-control" placeholder="Enter a URL">
         </div>
       </div>
       <div class="row pt-2">
@@ -94,7 +88,7 @@
       </div>
       <div class="row pt-2 pb-4">
         <div class="col-md">
-          <button class="btn text-center" type="button" id="clearStorageButton">Clear Storage</button>
+          <button class="btn btn-secondary text-center" type="button" id="clearStorageButton">Clear Storage</button>
         </div>
       </div>
     </div>
