@@ -17,7 +17,6 @@
 
   "permissions": [
     "contextMenus",
-    "cookies",
     "activeTab",
     "storage",
     "tabs",

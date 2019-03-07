@@ -27,12 +27,10 @@ const setUpCounter = async function (count) {
     // Set up some useful refs
     var $frameDocument = $frame.contents();
     var $counter = $frameDocument.find('#mtr-counter-content');
-    console.log($counter)
     $counter.find('span.count').text(count);
 
     $frame.hover(function () { // Handle the change when we hover
         let dsWord = "DataSource" + (count == 1 ? '' : 's')
-        console.log(dsWord)
         let $span = $('<span class="text">')
         $span.text(" " + dsWord + " active")
         $counter.append($span)
