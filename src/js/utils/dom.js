@@ -8,7 +8,7 @@ import { fetchText } from "./network";
   Given a div, set up a Shadow DOM inside it
 */
 function setUpShadowDOM($parentDiv) {
-    var shadow = $parentDiv[0].createShadowRoot();
+    var shadow = $parentDiv[0].attachShadow({'mode': 'closed'});
 
     return shadow;
 }
@@ -26,11 +26,16 @@ const setUpCounter = async function (count) {
 
     // Set up some useful refs
     var $frameDocument = $frame.contents();
-    var $counter = $frameDocument.find('#mtr-datasource-counter');
+    var $counter = $frameDocument.find('#mtr-counter-content');
+    console.log($counter)
     $counter.find('span.count').text(count);
 
     $frame.hover(function () { // Handle the change when we hover
-        $counter.append($('<span class="text"> DataSources Active </span>'))
+        let dsWord = "DataSource" + (count == 1 ? '' : 's')
+        console.log(dsWord)
+        let $span = $('<span class="text">')
+        $span.text(" " + dsWord + " active")
+        $counter.append($span)
     }, function () {
         $counter.find("span:last").remove();
     });

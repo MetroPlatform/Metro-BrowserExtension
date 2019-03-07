@@ -8,11 +8,17 @@ body {
 
 h1 {
   color: #efc04e;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .custom-control-input:checked~.custom-control-label::before {
   border-color: #efc04e;
   background-color: #efc04e;
+}
+
+.custom-control-input:focus ~ .custom-control-label::before {
+  box-shadow: 0px 0px 2px #efc04e;
+  border-color: #efc04e;
 }
 
 a {

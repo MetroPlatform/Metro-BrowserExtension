@@ -7,23 +7,27 @@
   /* The Modal (background) */
   #mtr-datasource-counter {
     font-size: 14px;
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     line-height: 20px;
-    background-color: #343a40;
     text-align: left;
-    padding: 0px;
-    padding-left: 10px;
-    padding-top: 5px;
-    //padding-left: 1rem;
+    margin: auto 0;
+    border-radius: 0.5rem;
     position: fixed;
-    border: 1px solid #efc04e;
-    color: #efc04e;
+    color: #fffdf8;
     z-index: 9999999;
   }
 
   #mtr-datasource-counter:hover {
     width: 180px;
+  }
+
+  #mtr-counter-content {
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 
 </style>
@@ -34,7 +38,9 @@
   </head>
   <body>
     <div id="mtr-datasource-counter">
-      <span class="count">0</span>
+      <div id="mtr-counter-content">
+        <span class="count">0</span>
+      </div>
     </div>
   </body>
 </html>
