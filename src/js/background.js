@@ -136,9 +136,11 @@ const shouldRun = function(datasource, url) {
     if(regex.test(url)) {
       return true;
     } else {
-      return false;
+      continue;
     }
   }
+
+  return false;
 }
 
 /**
