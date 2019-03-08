@@ -1,0 +1,30 @@
+iframe.mtr-overlay {
+    background-color: #efc04e;
+    overflow: hidden;
+    display: block;
+    padding: 0px;
+    position: fixed;
+    border: none;
+    height: 52px;
+    width: 52px;
+    left: 20px;
+    bottom: 20px;
+    z-index: 9999999;
+    -webkit-transition: width 0.2s ease-in-out;
+    -moz-transition: width 0.2s ease-in-out;
+    -o-transition: width 0.2s ease-in-out;
+    transition: width 0.2s ease-in-out;
+
+    /* border-radius */
+    -webkit-border-radius: 19px;
+    -moz-border-radius: 19px;
+    border-radius: 19px;
+    /* box-shadow */
+    -webkit-box-shadow: 0 1px 6px 0 rgba(0,0,0,.06), 0 2px 32px 0 rgba(0,0,0,.16);
+    -moz-box-shadow: 0 1px 6px 0 rgba(0,0,0,.06), 0 2px 32px 0 rgba(0,0,0,.16);
+    box-shadow: 0 1px 6px 0 rgba(0,0,0,.06), 0 2px 32px 0 rgba(0,0,0,.16);
+}
+
+iframe.mtr-overlay:hover {
+    width: 180px;
+}

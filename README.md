@@ -1,5 +1,7 @@
 ## Introduction ##
 
+** OUT OF DATE **
+
 This is the Chrome extension used to power Metro. The main work is done in
 `scriptLoader.js`. It runs on every page and handles the loading in of
 different datasources that you have enabled.

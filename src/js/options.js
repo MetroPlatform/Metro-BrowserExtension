@@ -1,3 +1,12 @@
+import "bootstrap"
+import $ from "jquery"
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Settings from "./utils/settings";
+import "../css/options.css"
+
+let settings = new Settings()
+
 /**
  * Displays all the extensions stored data.
  */
@@ -55,34 +64,18 @@ function allowLinks() {
  * its change. It also runs the clickCallback after setting the initial value
  * of the checkboxes.
  */
-function initCheckbox(id, clickCallback, initialValue) {
+async function initCheckbox(id, val) {
+  settings.setSync(id, val)
   let button = document.getElementById(id);
+  button.checked = val
+}
 
-  // First set the checkbox to the stored value.
-  chrome.storage.sync.get("Settings-"+id, function(items) {
-    if('Settings-'+id in items) {
-      console.log("Setting found");
-      button.checked = items["Settings-"+id];
-    } else {
-      console.log(id + " checkbox has never been set. Setting it to " + initialValue + ".");
-      // Set it manually
-      let storageItem = {};
-      storageItem["Settings-"+id] = initialValue;
-      chrome.storage.sync.set(storageItem);
-      button.checked = initialValue;
-    }
-
-    // Simulate a click after setting the checkbox value.
-    clickCallback();
-  });
-
-  // Then set click handler to update storage on change.
-  button.addEventListener('click', function() {
-    let storageItem = {};
-    storageItem["Settings-"+id] = button.checked;
-    chrome.storage.sync.set(storageItem);
-
-    clickCallback();
+async function setUpListener(id, callback) {
+  let button = document.getElementById(id);
+  button.addEventListener('click', async () => {
+    await settings.setSync(id, button.checked)
+    callback();
+    setUpAlert();
   });
 }
 
@@ -100,9 +93,12 @@ function setDevModeGithub() {
       let storageItem = {};
       storageItem["Settings-devModeGithubURL"] = " ";
       chrome.storage.sync.set(storageItem);
-      inputBox.value = " ";
     } else {
-      inputBox.value = items["Settings-devModeGithubURL"];
+      let val = items["Settings-devModeGithubURL"];
+      if(val != undefined) {
+        inputBox.value = val;
+      }
+      
     }
   });
 
@@ -123,6 +119,7 @@ function setDevModeGithub() {
  * any data it initially should.
  */
 function initDevMode() {
+  console.log("hello")
   if(!document.getElementById("devModeCheckbox").checked) {
     // If not in dev mode, hide the devModeContainer.
     document.getElementById("devModeContainer").className += " invisible";
@@ -135,7 +132,6 @@ function initDevMode() {
 
     dumpStoredData();
     setClearStorageHandler();
-
     setDevModeGithub();
   }
 }
@@ -153,12 +149,38 @@ const getDataFromURL = function loadURL(url, callback) {
   xhr.send();
 }
 
+const fetchFromUrl = (url) => {
+  /*
+    Fetches data and throws errors if not successful
+  */
+  return fetch(url, {
+    credentials: 'include',
+  }).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.error(`[ Metro ] Error fetching from URL ${url}`)
+      console.log("Response:")
+      console.log(response)
+      console.log("Headers:")
+      response.headers.forEach(console.log)
+      switch(response.status) {
+        case 404:
+          throw new Error(`Encountered Error 404 while fetching from URL ${url}`);
+        case 500:
+          throw new Error(`Encountered Error 500 while fetching from URL ${url}`);
+        default:
+          throw new Error(`Error occurred while fetching URL ${url}`)
+      }  
+    }
+  })
+}
+
 /**
 *** Populates the user information in the browser extension with the data from the Metro API
 **/
 const populateUserInfo = function(response) {
-  response = JSON.parse(response);
-
+  console.log(response)
   if(response['status'] == 1) {
     let username = response['content']['username'];
     $('#username').append(username);
@@ -184,19 +206,57 @@ const populateVersionInfo = function(response) {
   if(currentVer > ver) {
     $('#newVersion').removeClass('d-none');
   }
+}
 
-  console.log(currentVer);
-  console.log(ver);
+async function setUpAlert() {
+  console.log("Setting up alert")
+  let enabledVal = await settings.enabled() 
+  let devModeVal = await settings.getSync('devModeCheckbox')
+
+  let badgeColor = 'red';
+  let badgeText = '';
+  let alertText = '';
+
+  if(devModeVal) {
+    badgeText = '{  }'
+    badgeColor = '#bc880b'
+    alertText += 'Dev mode enabled'
+  } 
+  
+  if(!enabledVal) {
+    badgeText = '!'
+    badgeColor = 'red'
+    alertText += alertText.length > 0 ? '<br>' : ''
+    alertText += 'Metro is disabled.'
+  }
+
+  $('#alert').html(alertText)
+  chrome.browserAction.setBadgeText({ text: badgeText });
+  chrome.browserAction.setBadgeBackgroundColor({color: badgeColor});
+  console.log(`Alert text: ${alertText}`)
+  console.log(`Badge text: ${badgeText}`)
+  console.log(`Badge color: ${badgeColor}`)
 }
 
 
 // Entry point:
-document.addEventListener('DOMContentLoaded', () => {
-  getDataFromURL("https://getmetro.co/api/profile/", populateUserInfo);
+document.addEventListener('DOMContentLoaded', async () => {
+  fetchFromUrl("https://getmetro.co/api/profile/").then(populateUserInfo)
   getDataFromURL("https://getmetro.co/api/extension/status", populateVersionInfo);
-  initCheckbox("shouldMonitorCheckbox", () => {}, true);
-  initCheckbox("showCounterCheckbox", () => {}, true);
-  initCheckbox("devModeCheckbox", initDevMode, false);
+  let enabledVal = await settings.enabled() 
+  let counterVal = await settings.getSync('showCounterCheckbox') 
+  let devModeVal = await settings.devMode()
+  console.log(devModeVal)
+
+  setUpAlert()
+
+  initCheckbox("shouldMonitorCheckbox", enabledVal);
+  setUpListener("shouldMonitorCheckbox", () => {})
+  initCheckbox("showCounterCheckbox", counterVal);
+  setUpListener("showCounterCheckbox", () => {})
+  initCheckbox("devModeCheckbox", devModeVal);
+  setUpListener("devModeCheckbox", initDevMode)
+  initDevMode()
 
   allowLinks();
 });

@@ -2,17 +2,17 @@
   "manifest_version": 2,
   "name": "Metro",
   "description": "This extension allows a user to produce data using https://getmetro.co",
-  "version": "0.0.2",
+  "version": "0.1.0",
 
   "browser_action": {
-    "default_icon": "assets/metroLogo.png",
-    "default_popup": "src/options/options.html"
+    "default_icon": "metroLogo.png",
+    "default_popup": "options.html"
   },
 
   "icons": {
-    "16": "assets/metroLogo.png",
-    "48": "assets/metroLogo.png",
-    "128": "assets/metroLogo.png"
+    "16": "metroLogo.png",
+    "48": "metroLogo.png",
+    "128": "metroLogo.png"
   },
 
   "permissions": [
@@ -29,23 +29,22 @@
   },
 
   "background": {
-    "scripts": ["src/vendor/jquery/jquery.js", "src/core/background.js"]
+    "scripts": ["background.bundle.js"]
   },
 
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "css": ["src/static/css/overlay.css"],
       "js": [
-        "src/core/scriptLoader.js",
-        "src/vendor/jquery/jquery.js"
+        "vendor/jquery.js",
+        "scriptLoader.bundle.js"
       ]
     }
   ],
 
   "web_accessible_resources": [
-    "src/static/*",
-    "src/vendor/bootstrap/*"
+    "css/*",
+    "components/*"
   ],
 
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
