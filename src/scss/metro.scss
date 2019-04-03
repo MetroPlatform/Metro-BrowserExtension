@@ -1,0 +1,77 @@
+@import "./theme";
+@import "./mixins";
+@import "./variables";
+@import "./misc";
+@import "./nav";
+
+.mtr-welcome {
+    width: 15rem !important;
+    height: 13rem !important;
+}
+
+#mtr-dashboard {
+    width: 30rem !important;
+    height: 35rem !important;
+}
+
+.mtr-feed-content {
+    padding-bottom: 50px;
+}
+
+.tab-pane {
+    padding-bottom: 50px !important;
+}
+
+.custom-control-input:checked~.custom-control-label::before {
+    border-color: #efc04e;
+    background-color: #efc04e;
+}
+
+.custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0px 0px 2px #efc04e;
+    border-color: #efc04e;
+}
+
+.list-group-item {
+    word-wrap: break-word;
+}
+
+.invisible {
+    display: none;
+}
+
+#datasource-list a {
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+a.text-decoration-0 {
+    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.mtr-tabs {
+    height: 50px !important;
+}
+
+.mtr-content {
+    padding-bottom: 60px !important;
+    overflow: auto;
+    height: 100%;
+}
+
+.btn-group-xs > .btn, .btn-xs {
+    padding  : 0.4rem 0.4rem !important;
+    font-size  : 0.7rem !important;
+    line-height  : 0.5 !important;
+    border-radius : 0.2rem !important;
+  }
+
+  .fw-600 {
+      font-weight: 600;
+  }
+
+@import "./bootstrap/bootstrap.scss"

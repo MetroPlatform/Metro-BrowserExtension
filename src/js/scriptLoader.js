@@ -21,30 +21,38 @@ start()
 */
 async function start() {
     console.log("%c[ Metro ] Starting", 'color: green')
-    const metroEnabled = await settings.enabled()
+    const metroPaused = await settings.paused()
+    const loggedIn = await browser.runtime.sendMessage({
+        method: "userIsLoggedIn"
+    })
 
     // Only run if the extension is enabled
-    if (!metroEnabled) {
-        console.log("%c[ Metro ] Extension disabled.", 'color: red')
+    if (metroPaused) {
+        console.log("%c[ Metro ] Metro is paused.", 'color: red')
+        return;
+    } else if(!loggedIn) {
+        console.log("%c[ Metro ] Not logged in.", "color: red")
         return;
     }
 
     setUpListeners();
     clearContextMenuMsg();
     const devMode = await settings.devMode()
-    console.log(`[ Metro ] Dev Mode: ${devMode}`)
     let datasources = await messenger.loadDatasources(window.location.toString(), devMode)
 
     // Set up the counter
     let count = datasources.length;
-    let showCounter = await settings.showCounter()
-    if(showCounter && datasources.length > 0) {
+    let hideCounter = await settings.hideCounter()
+    if(!(hideCounter == true) && datasources.length > 0) {
         console.log(`%c[ Metro ] Setting up counter for ${count} DataSources`, 'color: green')
         setUpCounter(count)
-    } else if(!showCounter) {
+    } else if(hideCounter == true) {
         console.log("%c[ Metro ] DataSource counter disabled", 'color: red')
     } else if (datasources.length == 0) {
-        console.log("%c[ Metro ] No DataSources loaded, so not loading counter", 'color: red')
+        console.log("%c[ Metro ] No DataSources loaded", 'color: red')
+        setUpCounter(0)
+    } else {
+        console.log("%c[ Metro ] Not loading counter", 'color: red')
     }
 }
 
@@ -53,6 +61,33 @@ async function start() {
 *   from the background script
 */
 function setUpListeners() {
+    /*
+    *   Gets the favicon for the current page and returns its href
+    */
+   browser.runtime.onMessage.addListener(msg => {
+        if(msg.sender === "popup" && msg.method === "getFavicon") {
+            try {
+                const faviconUrl = document.querySelector('link[rel="shortcut icon"]').href;
+                return Promise.resolve(faviconUrl)
+            } catch(err) {
+                const faviconUrl = document.querySelector('link[rel="icon"]').href;
+                return Promise.resolve(faviconUrl)
+            }
+        }
+    })
+
+    /*
+    *   Returns the list of currently active DataSources
+    */
+    browser.runtime.onMessage.addListener(msg => {
+        if(msg.method == "getActiveDataSources") {
+            return Promise.resolve(ACTIVE_DATASOURCES)
+        }
+    })
+
+    /*
+    *   Initializes the given DataSource
+    */
     browser.runtime.onMessage.addListener(msg => {
         if (msg.method == "initDatasource") {
             try {
@@ -79,15 +114,16 @@ const initDataSource = function (data) {
     let projects = data['projects']
     let schema = data['schema']
 
-    if (slug in ACTIVE_DATASOURCES) {
+    if(slug in ACTIVE_DATASOURCES) {
         throw new Error(`[ Metro ] DataSource ${slug} already active.`)
     }
 
     // Create the client:
-    var metroClient = new MetroClient(datasource, slug, username, projects, schema);
+    var metroClient = new MetroClient(datasource, data.datasourceDetails.title, slug, username, projects, schema);
 
     ACTIVE_DATASOURCES[slug] = {
-        'metroClient': metroClient
+        'metroClient': metroClient,
+        'details': data['datasourceDetails']
     }
     console.log("[ Metro ] Done!")
 }

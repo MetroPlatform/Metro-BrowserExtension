@@ -25,6 +25,7 @@ var options = {
   entry: {
     scriptLoader: path.join(SRC_DIR, "js", "scriptLoader.js"),
     options: path.join(SRC_DIR, "js", "options.js"),
+    menuApp: path.join(SRC_DIR, "js", "app", "menuApp.js"),
     background: path.join(SRC_DIR, "js", "background.js")
   },
   chromeExtensionBoilerplate: {
@@ -37,8 +38,33 @@ var options = {
   module: {
     rules: [
       {
+          test: /\.js$/,
+          include: SRC_DIR,
+          loaders: "babel-loader",
+          query: {
+              presets: [
+                [
+                  '@babel/preset-react'
+                ], 
+                [
+                  '@babel/preset-env',
+                  {
+                    "targets": {
+                      "browsers": ["last 2 Chrome versions"]
+                    }
+                  }
+                ],
+              ],
+              plugins: ['@babel/plugin-proposal-class-properties']
+          },
+      },
+      {
         test: /\.css$/,
         loader: "style-loader!css-loader"
+      },
+      {
+        test: /\.scss$/,
+        loaders: [ 'style-loader', 'css-loader', 'sass-loader' ]
       },
       {
         test: new RegExp('\.(' + fileExtensions.join('|') + ')$'),
@@ -88,7 +114,7 @@ var options = {
     new HtmlWebpackPlugin({
       template: path.join(SRC_DIR, "options.html"),
       filename: "options.html",
-      chunks: ["options"]
+      chunks: ["menuApp"]
     }),
     new WriteFilePlugin()
   ]
