@@ -1,0 +1,13 @@
+.nav .nav-item {
+    background-color: $gray-100;
+    cursor: pointer;
+}
+
+.nav .nav-item .nav-link {
+    &:not(.active) {
+        border: 1px solid $gray-300;
+    }
+}
+
+
+
