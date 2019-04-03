@@ -1,0 +1,19 @@
+@each $color, $value in $theme-colors {
+    .circle-#{$color} {
+        width: 10px !important;
+        height: 10px !important;
+        -webkit-border-radius: 50% !important;
+        -moz-border-radius: 50% !important;
+        border-radius: 50% !important;
+        background: $value !important;
+    }
+  }
+
+.circle-foo {
+    width: 10px !important;
+    height: 10px !important;
+    -webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
+    border-radius: 50% !important;
+    background: red;
+}

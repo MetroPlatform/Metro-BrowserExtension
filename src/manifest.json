@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Metro",
-  "description": "This extension allows a user to produce data using https://getmetro.co",
-  "version": "0.1.1",
+  "description": "Metro lets you make activity feeds about anything - https://getmetro.co",
+  "version": "1.0.0",
 
   "browser_action": {
     "default_icon": "metroLogo.png",
@@ -29,7 +29,8 @@
   },
 
   "background": {
-    "scripts": ["background.bundle.js"]
+    "scripts": ["background.bundle.js"],
+    "persistent": true
   },
 
   "content_scripts": [
@@ -47,5 +48,5 @@
     "components/*"
   ],
 
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  "content_security_policy": "script-src https://www.google-analytics.com 'self' 'unsafe-eval'; object-src 'self'"
 }

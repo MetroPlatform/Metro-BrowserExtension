@@ -1,15 +1,18 @@
 import browser from "webextension-polyfill";
 import { addModalInput, hasShadowParent } from "./utils/dom";
 import { createContextMenuButtonMsg } from "./utils/contextMenu"
+import Settings from "./utils/settings"
 
 const BUTTON_STATE = "Metro-Core-ContextMenuButtons";
+const settings = new Settings()
 
 /*
         The client for accessing the Metro API
 */
 class MetroClient {
-    constructor(datasource, slug, username, projects, schema) {
+    constructor(datasource, title, slug, username, projects, schema) {
         this.datasource = datasource;
+        this.datasourceTitle = title;
         this.slug = slug;
         this.username = username;
         this.projects = projects;
@@ -39,7 +42,12 @@ class MetroClient {
     }
 
     // Sends a datapoint to Metro
-    sendDatapoint(datapoint) {
+    async sendDatapoint(datapoint) {
+        if(await settings.paused()) {
+            console.log("%c[ Metro ] Metro is paused, not sending datapoint.", "color: red")
+            return;
+        }
+
         if (this.validateDatapoint(this.schema, datapoint)) {
 
             let datapointDetails = {
@@ -49,7 +57,7 @@ class MetroClient {
                 'projects': this.projects,
                 'datapoint': datapoint
             }
-            console.log('%c[ Metro ] Pushing datapoint for ' + this.datasource, 'color: green');
+            console.log('%c[ Metro ] Pushing datapoint for ' + this.datasourceTitle, 'color: green');
             browser.runtime.sendMessage(datapointDetails)
                 .catch(reason => {
                     console.log("%c[ Metro ] " + reason, 'color: red')
