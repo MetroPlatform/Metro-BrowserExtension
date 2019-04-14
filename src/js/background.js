@@ -6,8 +6,14 @@ import browser from "webextension-polyfill"
 
 import Metro from "./app/services/metro";
 
-const CLIENT_ID = "6nkGZWc60gW1jHChhN4iqNz0AsYz1Jbh1jpV8JGd"
-const CLIENT_SECRET = "hip9UoMpK38fsRhqdkbcUqNiZ1MshCuQdytiIDhlICf0ehgaVpNLOXPAtKr6CuTXUQ106B9vISXmLF9rnY30vploWBjwr0v3eZFe4ZCr7MOaitUA8DU13vx0lAecd3GD"
+// DEV
+// const CLIENT_ID = "tJE8Ai7etgL6hzFmcejDfRqCUYSEDY7yvxbtDh8r"
+// const CLIENT_SECRET = "ZMWkk4VUr8v1aVUI9YrSlb5FRV7b2Ve2sJoWLJRQlvTq8R1ArhxZry5B0aWmNQzrKmbpEqkaVaMLwr2n5mWxNLb1ANiR6cyA9Qz4NF8syNemQoGDNz3zgTo1Kg65uC6u"
+
+// PROD
+const CLIENT_ID = "sgAX9NZXAxBAQsbXxWEEDcAuglvgMVVUwYuUGyZV"
+const CLIENT_SECRET = "dwfUDSwB264Si82qfvCvZn7xOKmwWyIKEaoxY7wH6ULc3vMvCEQHWItainME0FOK64Wcl8NVVYgaeLlD53QGrAXid3L5F17IVAlNnpZws54Zdw7q32fkeSelSEEVa0Ey"
+
 const settings = new Settings()
 const metroClient = new Metro(CLIENT_ID, CLIENT_SECRET)
 

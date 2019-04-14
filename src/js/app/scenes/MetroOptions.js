@@ -6,9 +6,11 @@ import DashboardContainer from "./dashboard/DashboardContainer";
 import Metro from "../services/metro";
 import Loading from "../common/components/Loading";
 
+// DEV
 // const CLIENT_ID = "tJE8Ai7etgL6hzFmcejDfRqCUYSEDY7yvxbtDh8r"
 // const CLIENT_SECRET = "ZMWkk4VUr8v1aVUI9YrSlb5FRV7b2Ve2sJoWLJRQlvTq8R1ArhxZry5B0aWmNQzrKmbpEqkaVaMLwr2n5mWxNLb1ANiR6cyA9Qz4NF8syNemQoGDNz3zgTo1Kg65uC6u"
 
+// PROD
 const CLIENT_ID = "sgAX9NZXAxBAQsbXxWEEDcAuglvgMVVUwYuUGyZV"
 const CLIENT_SECRET = "dwfUDSwB264Si82qfvCvZn7xOKmwWyIKEaoxY7wH6ULc3vMvCEQHWItainME0FOK64Wcl8NVVYgaeLlD53QGrAXid3L5F17IVAlNnpZws54Zdw7q32fkeSelSEEVa0Ey"
 

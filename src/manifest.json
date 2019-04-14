@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Metro",
   "description": "Metro lets you make activity feeds about anything - https://getmetro.co",
-  "version": "1.0.0",
+  "version": "1.0.2",
 
   "browser_action": {
     "default_icon": "metroLogo.png",
