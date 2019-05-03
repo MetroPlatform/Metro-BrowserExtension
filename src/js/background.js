@@ -231,7 +231,8 @@ const pushToLambda = async (datapointDetails) => {
     return;
   }
   
-  const apiKey = await metroClient.profile.getApiKey()
+  const apiKeyData = await metroClient.profile.getApiKey()
+  const apiKey = apiKeyData.key
 
   const data = {
     "datasource": datasource,
@@ -243,7 +244,8 @@ const pushToLambda = async (datapointDetails) => {
 
   console.log("[ Metro ] Pushing datapoint");
 
-  metroClient.sendDatapoint(data, apiKey.key)
+  metroClient.sendDatapointNew(data)
+  metroClient.sendDatapoint(data, apiKey)
 }
 
             ///////////////////////
@@ -254,7 +256,6 @@ const pushToLambda = async (datapointDetails) => {
 *   Pauses Metro and starts a timer to un-pause it
 */
 const pauseMetro = async (seconds) => {
-  console.debug("Pausing Metro.")
   await settings.setPaused(true)
   await settings.setUnpauseTime(Date.now() + seconds * 1000)
 
@@ -282,7 +283,7 @@ const unPauseMetro = async () => {
 chrome.runtime.onInstalled.addListener(function () {
   clearContextMenu();
   // Set defaults
-  settings.setHideCounter(false)
+  settings.setShowCounter(false)
   settings.setDevMode(false);
 });
 

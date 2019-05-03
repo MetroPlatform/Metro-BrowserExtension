@@ -16,7 +16,7 @@ const OptionsContainer = ({ metroClient, onLogout, setTextAlert }) => {
 
     // Checkbox values
     const [devMode, setDevMode] = useState(false);
-    const [hideCounter, setHideCounter] = useState(true);
+    const [showCounter, setShowCounter] = useState(false);
 
     // Input Values
     const [devModeUrl, setDevModeUrl] = useState('')
@@ -25,12 +25,12 @@ const OptionsContainer = ({ metroClient, onLogout, setTextAlert }) => {
         try {
             const currentUser = await metroClient.profile.profile()
             const devModeSettings = await settings.devMode() || false;
-            const hideCounterSettings = await settings.hideCounter() || false;
+            const showCounterSettings = await settings.showCounter() || false;
             const devModeUrlSettings = await settings.devModeUrl() || ''
 
             setDevMode(devModeSettings)
             setDevModeUrl(devModeUrlSettings)
-            setHideCounter(hideCounterSettings)
+            setShowCounter(showCounterSettings)
             setUser(currentUser)
             setIsLoading(false)
             setIndicator()
@@ -54,7 +54,7 @@ const OptionsContainer = ({ metroClient, onLogout, setTextAlert }) => {
         } else {
             setTextAlert("")
         }
-        await settings.setHideCounter(hideCounter)
+        await settings.setShowCounter(showCounter)
         await settings.setDevMode(devMode)
         await settings.setDevModeUrl(devModeUrl)
         setSuccess(true)
@@ -81,8 +81,8 @@ const OptionsContainer = ({ metroClient, onLogout, setTextAlert }) => {
         <Options 
             user={user}
 
-            hideCounter={ hideCounter }
-            setHideCounter={ setHideCounter }
+            showCounter={ showCounter }
+            setShowCounter={ setShowCounter }
             devMode={ devMode }
             setDevMode={ setDevMode }
 

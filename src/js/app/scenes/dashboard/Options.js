@@ -5,9 +5,9 @@ import { Row, Col, Button, CustomInput, FormGroup, Input, Label } from "reactstr
 const Options = ({ user,
 
                     devMode, 
-                    hideCounter, 
+                    showCounter, 
                     setDevMode, 
-                    setHideCounter, 
+                    setShowCounter, 
 
                     devModeUrl,
                     setDevModeUrl,
@@ -32,17 +32,17 @@ const Options = ({ user,
             </p>
             <hr></hr>
             <CustomInput 
-                checked={ hideCounter }
+                checked={ showCounter }
                 onChange={ () => {
                     ReactGA.event({
                         category: 'Extension Settings',
-                        action: "Set hideCounter to " + !hideCounter,
+                        action: "Set showCounter to " + !showCounter,
                     });
-                    setHideCounter(!hideCounter) 
+                    setShowCounter(!showCounter) 
                 }}
                 type="checkbox" 
-                id="hideCounterCheckbox" 
-                label="Hide the DataSource counter" 
+                id="showCounterCheckbox" 
+                label="Show the DataSource counter" 
             />
             <CustomInput 
                 checked={ devMode }
