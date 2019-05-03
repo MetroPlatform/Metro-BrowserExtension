@@ -39,20 +39,15 @@ async function start() {
     clearContextMenuMsg();
     const devMode = await settings.devMode()
     let datasources = await messenger.loadDatasources(window.location.toString(), devMode)
-
+    
     // Set up the counter
     let count = datasources.length;
-    let hideCounter = await settings.hideCounter()
-    if(!(hideCounter == true) && datasources.length > 0) {
+    let showCounter = await settings.showCounter()
+    if(showCounter == true) {
         console.log(`%c[ Metro ] Setting up counter for ${count} DataSources`, 'color: green')
         setUpCounter(count)
-    } else if(hideCounter == true) {
+    } else if(showCounter == false) {
         console.log("%c[ Metro ] DataSource counter disabled", 'color: red')
-    } else if (datasources.length == 0) {
-        console.log("%c[ Metro ] No DataSources loaded", 'color: red')
-        setUpCounter(0)
-    } else {
-        console.log("%c[ Metro ] Not loading counter", 'color: red')
     }
 }
 

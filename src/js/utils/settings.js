@@ -21,10 +21,10 @@ class Settings {
         return enabled
     }
 
-    async hideCounter() {
-        const settingName = "hideCounter"
-        let hidden = await this.getSync(settingName)
-        return hidden
+    async showCounter() {
+        const settingName = "showCounter"
+        let show = await this.getSync(settingName)
+        return show
     }
 
     async devMode() {
@@ -77,8 +77,8 @@ class Settings {
         this.setSync('devModeUrl', value);
     }
 
-    setHideCounter(value) {
-        this.setSync('hideCounter', value);
+    setShowCounter(value) {
+        this.setSync('showCounter', value);
     }
 
     setCredentials(value) {

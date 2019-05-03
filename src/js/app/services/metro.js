@@ -65,7 +65,6 @@ class Metro {
     _setUser = async () => {
         try {
             const user = await this.profile.profile();
-            console.log(user)
             this.user = user;
         } catch(err) {
             this.user = null;
@@ -148,19 +147,19 @@ class Metro {
             if(credentials === null) {
                 throw new Error("No credentials")
             }
+            const token = credentials.access_token
 
             switch(method) {
                 case "GET":
-                    return await fetchMetroAPI(path, credentials.access_token)
+                    return await fetchMetroAPI(path, token)
                 case "POST":
-                    return await postMetroAPI(path, data, credentials.access_token)
+                    return await postMetroAPI(path, data, token)
                 case "PATCH":
-                    return await patchMetroAPI(path, data, credentials.access_token)
+                    return await patchMetroAPI(path, data, token)
             }
             
         } catch(err) {
             if(err.message == "403" || err.message == "401") {
-                console.debug("Refreshing Access Token")
                 await this.refreshAccessToken()
                 const updatedCredentials = await settings.getCredentials()
                 switch(method) {
@@ -214,9 +213,17 @@ class Metro {
         }).catch(err => console.error(err))
     }
 
+    sendDatapointNew = (datapoint) => {
+        const path = "/api/v0.1/push"
+        return this._post(this.base + path, datapoint)
+    }
+
+
     setInstalled = async () => {
         await this.profile.setProfile({
-            extension_installed: true
+            profile: {
+                extension_installed: true
+            }
           })
     }
 

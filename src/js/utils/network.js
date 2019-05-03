@@ -26,7 +26,7 @@ const postMetroAPI = (url, data, token) => {
         "Content-Type": "application/json"
     }
     if(token) {
-        headers.Authorization = "BEARER " + token
+        headers.Authorization = "Bearer " + token
     }
 
     return postData(url, data, 'POST', headers)
@@ -37,7 +37,7 @@ const patchMetroAPI = (url, data, token) => {
         "Content-Type": "application/json"
     }
     if(token) {
-        headers.Authorization = "BEARER " + token
+        headers.Authorization = "Bearer " + token
     }
 
     return postData(url, data, 'PATCH', headers)
